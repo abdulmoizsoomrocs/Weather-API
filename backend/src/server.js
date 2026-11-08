@@ -3,6 +3,7 @@ const cors = require("cors");
 
 const { PORT } = require("./config/env");
 const weatherRoutes = require("./routes/weather.routes");
+const redisClient = require("./config/redis");
 
 const app = express();
 
@@ -20,7 +21,20 @@ app.get("/", (req, res) => {
     });
 });
 
-// Start server
-app.listen(PORT, () => {
-    console.log(`Weather API running on http://localhost:${PORT}`);
-});
+// Start server after Redis connection
+const startServer = async () => {
+    try {
+        await redisClient.connect();
+        console.log("Redis connected successfully");
+
+        app.listen(PORT, () => {
+            console.log(`Weather API running on http://localhost:${PORT}`);
+        });
+
+    } catch (error) {
+        console.error("Server startup failed:", error.message);
+        process.exit(1);
+    }
+};
+
+startServer();

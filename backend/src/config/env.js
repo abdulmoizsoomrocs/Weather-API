@@ -1,10 +1,13 @@
-require("dotenv").config();
+const dotenv = require("dotenv");
 
-const PORT = process.env.PORT;
-const VISUAL_CROSSING_API_KEY =
-    process.env.VISUAL_CROSSING_API_KEY || process.env.API_KEY;
-module.exports = { 
+dotenv.config();
+
+const PORT = process.env.PORT || 5000;
+const VISUAL_CROSSING_API_KEY = process.env.VISUAL_CROSSING_API_KEY;
+const REDIS_URL = process.env.REDIS_URL;
+
+module.exports = {
     PORT,
-    VISUAL_CROSSING_API_KEY
- }; 
- 
+    VISUAL_CROSSING_API_KEY,
+    REDIS_URL
+};
