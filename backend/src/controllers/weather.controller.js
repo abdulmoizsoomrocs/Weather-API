@@ -29,7 +29,7 @@ const getWeather = async (req, res) => {
     } catch (error) {
 
         console.error("Weather API Error:", error.message);
-
+ 
         if (error.response?.status === 400) {
             return res.status(400).json({
                 success: false,
